@@ -1,4 +1,4 @@
-define(["jquery"],function(){
+define(["jquery","signInModal"],function($,signinModal){
 	function SignOutModal(){
 		this.signOutModal();
 		this.check();
@@ -16,7 +16,7 @@ define(["jquery"],function(){
 		      </div>
 		      <div class="modal-body">
 		      <div class="alert alert-info hidden signOut-error" role="alert">注册失败</div>
-		      <form>
+		      <form id="signOutForm">
 				  <div class="form-group">
 					    <label for="signUp-username">用户名</label>
 					    <input type="text" name="name" class="form-control" id="signUp-username" placeholder="请输入用户名">
@@ -97,7 +97,7 @@ define(["jquery"],function(){
 		toSignOut(){
 			var _this=this;
 			$("#signOutBtn").on("click",function(e){
-				let data=$("form").serialize();
+				let data=$("#signOutForm").serialize();
 				e.preventDefault();
 				if(_this.flag){
 					$.post("http://rap2api.taobao.org/app/mock/124852/signOut",data,
@@ -107,19 +107,18 @@ define(["jquery"],function(){
 								$(".signOut-error").removeClass("hidden");
 							}else{//如果注册成功，隐藏模态框
 								$('#mySignOutModal').modal('toggle');
-								//将用户信息存在session中
-								var obj={};
-								obj.name="frank";
-								obj.age=23;
-								sessionStorage.setItem("nameInfo",JSON.stringify(obj));
-								location.href="/html/employeeInfo.html";
+								//提示注册成功，提示去登录
+								if(confirm("注册成功，去登录")){
+									signinModal.prototype.showSignIn();
+								};
+
 							}
 						},"json");
 					}
 
 			});
 
-		}
+		},
 	});
 	return SignOutModal;
 })

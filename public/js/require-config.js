@@ -6,7 +6,8 @@ require.config({
 		swiper: "/lib/swiper/js/swiper.min",
 		nav:"/js/component/nav",
 		signOutModal:"/js/component/signOutModal",
-		signInModal:"/js/component/signInModal"
+		signInModal:"/js/component/signInModal",
+		template:"/lib/art-template/template-web"
 	},
 	shim: {
 		bootstrap: {
